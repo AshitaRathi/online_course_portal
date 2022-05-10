@@ -1,0 +1,139 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% block head%}
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+        <link rel="stylesheet" href='{% static "/css/style.css" %}'>
+        {% endblock%}
+    </head>
+    <body>
+  
+    <div class="container-fluid" id="main_body">
+        {% block navbar%}
+            <nav class="navbar navbar-expand-sm bg-dark navbar-right">
+                <ul class="navbar-nav">
+                    <li class="nav-item p-2">
+                        <a class="nav-link" href="{% url 'index' %}">Home</a>
+                    </li>
+                    {% comment %} <li class="nav-item dropdown p-2">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                          Categories
+                        </a>
+                        <div class="dropdown-menu">
+                          <a class="dropdown-item" href="#">Design</a>
+                          <a class="dropdown-item" href="#">Development</a>
+                          <a class="dropdown-item" href="#">Marketing</a>
+                          <a class="dropdown-item" href="#">IT and Software</a>
+                          <a class="dropdown-item" href="#">Personal Development</a>
+                          <a class="dropdown-item" href="#">Photography</a>
+                          <a class="dropdown-item" href="#">Music</a>
+                        </div>
+                      </li> {% endcomment %}
+                    {% if user_type == "Teacher" %}
+                        <li class="nav-item p-2">
+                            <a class="nav-link" href="{% url 'add_course' %}">Add Course</a>
+                        </li>
+                        <li class="nav-item p-2">
+                            <a class="nav-link" href="{% url 'your_courses' %}">Your Courses</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item p-2">
+                            <a class="nav-link" href="{% url 'student_enrolled_courses' %}">Enrolled Courses</a>
+                        </li>
+                    {% endif %}
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <form class="form-inline" action="{% url 'search_results' %}" method="get">
+                        <input class="form-control mr-sm-2" name="q" type="text" placeholder="Search">
+                        <button class="btn btn-success" type="submit">Search</button>
+                    </form>
+                </ul>
+            </nav> 
+        {% endblock%}
+
+        {% block main_body%}
+        <div id="carousel_images" class="carousel slide" data-ride="carousel" data-interval="2000">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img class="d-block w-100" src="{% static "images/carousel_images/data_science.png" %}" alt="First slide" height="500">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="{% static "images/carousel_images/django.png" %}" alt="Second slide" height="500">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="{% static "images/carousel_images/python.jpeg" %}" alt="Third slide" height="500">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="{% static "images/carousel_images/ai.jpg" %}" alt="Fouth slide" height="500">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="{% static "images/carousel_images/cloud_computing.jpg" %}" alt="Fifth slide" height="500">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="{% static "images/carousel_images/java.jpeg" %}" alt="Fifth slide" height="500">
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+        {% block all_courses %}
+        <div class="courses pt-4">
+            {% for c in course %}
+            <div class="d-flex justify-content-center">
+                <div class="card m-4 p-4" style="width: 40rem;">
+                    <img class="card-img-top" src="{{c.course_image.url}}" alt="{{c.course_image}}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{c.course_name}}</h5>
+                        <p class="card-text">{{c.description|truncatewords:20}}</p>
+                        <a href="{% url 'selected_course' pk=c.pk %}" class="btn btn-primary">Read More</a>
+                    </div>
+                </div>
+            </div>      
+            {% endfor %}         
+        </div>
+        {% endblock %}
+
+        {% if course.has_other_pages %}
+            <ul class="pagination justify-content-center">
+                {% if course.has_previous %}
+                    <li class="page-item"><a href="?page={{ course.previous_page_number }}" class="page-link">&laquo;</a></li>
+                {% else %}
+                    <li class="disabled" class="page-item"><span class="page-link">&laquo;</span></li>
+                {% endif %}
+                {% for i in course.paginator.page_range %}
+                    {% if course.number == i %}
+                        <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+                    {% else %}
+                        <li class="page-item"><a href="?page={{ i }}" class="page-link">{{ i }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                {% if course.has_next %}
+                    <li class="page-item"><a href="?page={{ course.next_page_number }}" class="page-link">&raquo;</a></li>
+                {% else %}
+                    <li class="disabled" class="page-item"><span class="page-link">&raquo;</span></li>
+                {% endif %}
+            </ul>
+        {% endif %}
+        
+
+        {% block comment %}{% endblock %}
+
+        {% block about_us %}
+        <hr class="m-4">
+        <div class="p-4 m-4">
+            <h1 class="font-weight-bold" style="color:#1C344A;font-size:40px;">About Us</h1>
+            <div class="d-flex justify-content-around pt-4">
+                <img class="card-img-top" src="{% static "images/about_us_image1.jpg" %}" alt="{{c.course_image}}" style="height:200px; width:400px;">
+                <p class="pl-4 pr-4 ml-4 mr-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </div>
+        </div>
+        {% endblock %}
+    </div>
+    

@@ -1,0 +1,24 @@
+{% extends '../pages/index.html' %}
+{% load static %}
+{% block main_body %}{% endblock %}
+
+{% block all_courses %}
+<div class="courses pt-4">
+    {% for c in course %}
+    <div class="d-flex justify-content-center">
+        <div class="card m-4 p-4" style="width: 40rem;">
+            <img class="card-img-top" src="{{c.course_image.url}}" alt="{{c.course_image}}">
+            <div class="card-body">
+                <h5 class="card-title">{{c.course_name}}</h5>
+                <p class="card-text">{{c.description|truncatewords:20}}</p>
+                <div class="d-flex justify-content-around">
+                    <a href="{% url 'user_enrollment' pk=c.pk %}" class="btn btn-success">Read More</a>
+                    <a href="{% url 'course_update' pk=c.pk %}" class="btn btn-primary">Update Course</a>
+                    <a href="{% url 'delete_course' pk=c.pk %}" class="btn btn-danger">Delete Course</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

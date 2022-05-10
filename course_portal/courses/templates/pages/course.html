@@ -1,0 +1,28 @@
+{% extends '../pages/index.html' %}
+{% load static %}
+{% block all_courses %}{% endblock %}
+{% block main_body %}
+    <div class="course_container p-4 ml-4 mr-4">
+        <h1 class="font-weight-bold" style="color: #1C344A  ;font-size:50px;">{{course.course_name}}</h1>
+        <hr>
+        <div class="d-flex justify-content-around pt-4">
+            <img src="{{course.course_image.url}}" alt="{{course.course_image}}" width="500"> 
+            <p class="pl-4 pr-4">{{course.description}}</p>
+        </div>
+        <a href="{% url 'user_enrollment' pk=course.pk %}" class="btn btn-success mt-4 font-weight-bold">ENROLL</a>
+    </div>
+{% endblock %}
+{% block comment %}
+    <hr class="m-4 p-4">
+    <h1 class="font-weight-bold text-center" style="color: #1C344A  ;font-size:30px;">Comment Section</h1>
+    {% for i in comments %}
+        <div class="d-flex justify-content-center">
+            <div class="card m-4" style="width: 60rem;">
+                <div class="card-body">
+                    <h5 class="card-title" style="color: #C70039  ;font-size:20px;"><b>{{full_name}}</b></h5>
+                    <p class="card-text">{{i.description}}</p>   
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

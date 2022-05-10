@@ -1,0 +1,38 @@
+{% extends '../pages/index.html' %}
+{% load static %}
+{% block main_body %}
+    <h1 class="font-weight-bold" style="color: #1C344A  ;font-size:50px; text-align:center;margin:3%;">Login Here</h1>
+    <div class="d-flex justify-content-center align-items-center">
+        <div id="login" class = "shadow p-4 mb-5 bg-white rounded" style="width:280px;">
+            <form class="form-horizontal" name="LoginForm" action="/login/" method="post">
+            {% csrf_token %}
+            {% if next %}
+                <input type="hidden" name="next" value="{{ next }}" />
+            {% endif %}
+            <div class="control-group">
+                <label class="control-label" for="email">Email Address</label>
+                <div class="controls">
+                    <input type="text" id="email" name="email" placeholder="Email Address">
+                </div>
+            </div>
+            <div class="control-group mt-4">
+                <label class="control-label" for="password">Password</label>
+                <div class="controls">
+                    <input type="password" name="password" id="password" placeholder="Password">
+                </div>
+            </div>
+            <div class="control-group mt-4">
+                <div class="controls text-center">
+                    <button type="submit" class="btn btn-primary ">Login</button>
+                </div>
+            </div>
+            </form>
+            <div class="pt-4">
+                If you don't have an account,
+                <div class="text-center"> 
+                    <a href="{% url 'register' %}" class="btn btn-primary mt-3">Register Here.</a>
+                </div>
+            </div>
+        </div>
+    </div>  
+{% endblock %}

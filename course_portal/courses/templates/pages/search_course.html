@@ -1,0 +1,18 @@
+{% extends "pages/index.html" %}
+{% block main_body%}{% endblock %}
+{% block all_courses %}
+<div class="courses pt-4">
+    {% for c in object_list %}
+    <div class="d-flex justify-content-center">
+        <div class="card m-4 p-4" style="width: 40rem;">
+            <img class="card-img-top" src="{{c.course_image.url}}" alt="{{c.course_image}}">
+            <div class="card-body">
+                <h5 class="card-title">{{c.course_name}}</h5>
+                <p class="card-text">{{c.description|truncatewords:20}}</p>
+                <a href="{% url 'selected_course' pk=c.pk %}" class="btn btn-primary">Read More</a>
+            </div>
+        </div>
+    </div>      
+    {% endfor %}         
+</div>
+{% endblock %}

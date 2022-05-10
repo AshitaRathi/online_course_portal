@@ -1,0 +1,19 @@
+#main_body {
+    padding-left: 0rem;
+    padding-right: 0rem;
+    overflow: hidden;
+}
+
+a {
+    color: white;
+}
+
+a:hover {
+    color: white;
+}
+
+#break {
+    flex-basis: 100%;
+    height: 0;
+}
+
