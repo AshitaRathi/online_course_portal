@@ -16,13 +16,14 @@ A simple Django-based web application to manage and display online courses. This
 ## 📁 Project Structure
 online_course_portal/
 │
-├── course_portal/ # Django project folder (settings, urls, wsgi, etc.)
-├── courses/ # Django app for managing courses
-├── media/ # Media files (uploads)
-├── static/ # Static files (CSS, JS, images)
-├── db.sqlite3 # SQLite database
-├── manage.py # Django management script
-└── requirements.txt # Python dependencies
+├── course_portal/       # Django project folder (settings, urls, wsgi, etc.)
+├── courses/             # Django app for managing courses
+├── media/               # Media files (uploads)
+├── static/              # Static files (CSS, JS, images)
+├── db.sqlite3           # SQLite database
+├── manage.py            # Django management script
+└── requirements.txt     # Python dependencies
+
 
 ✨ Features
 - Admin panel for managing course content
